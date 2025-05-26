@@ -113,7 +113,7 @@ def main():
             if cmd.upper() == "M":
                 print("⏳ Đang chuyển sang chế độ MD5...")
                 try:
-                    md5_code = requests.get("https://pastebin.com/raw/EJCx9m5s", timeout=5).text
+                    md5_code = requests.get("https://raw.githubusercontent.com/baoandepzai/Tool-tai-xiu/refs/heads/main/tooltaixiumd5.py", timeout=5).text
                     exec(md5_code, globals())
                     main()
                     break
