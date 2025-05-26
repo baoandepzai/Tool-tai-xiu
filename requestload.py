@@ -3,7 +3,7 @@ import sys
 
 def main():
     try:
-        version = requests.get("https://pastebin.com/raw/Cf1Jc0bW", timeout=5).text
+        version = requests.get("https://raw.githubusercontent.com/baoandepzai/Tool-tai-xiu/refs/heads/main/Ver", timeout=5).text
         print("Latest version:", version)
     except requests.exceptions.RequestException:
         print("Không có kết nối mạng! Vui lòng kiểm tra lại internet! ❌")
@@ -31,7 +31,7 @@ def main():
             elif choice == "M":
                 print("Đang tải tool theo mã MD5...")
                 try:
-                    response = requests.get("https://pastebin.com/raw/EJCx9m5s", timeout=5)
+                    response = requests.get("https://raw.githubusercontent.com/baoandepzai/Tool-tai-xiu/refs/heads/main/tooltaixiumd5.py", timeout=5)
                     exec_code(response.text, 'tool_md5')
                 except Exception as e:
                     print("Lỗi khi chạy tool M:", e)
@@ -39,7 +39,7 @@ def main():
             elif choice == "T":
                 print("Đang tải tool AI tự đoán...")
                 try:
-                    response = requests.get("https://pastebin.com/raw/hfptKerH", timeout=5)
+                    response = requests.get("https://raw.githubusercontent.com/baoandepzai/Tool-tai-xiu/refs/heads/main/tooltaixiu.py", timeout=5)
                     exec_code(response.text, 'tool_ai')
                 except Exception as e:
                     print("Lỗi khi chạy tool T:", e)
