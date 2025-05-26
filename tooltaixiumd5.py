@@ -143,7 +143,7 @@ def main():
         if md5_hash.upper() == "T":
             print("⏳ Đang chuyển sang chế độ thường...")
             try:
-                md5_code = requests.get("https://pastebin.com/raw/hfptKerH").text
+                md5_code = requests.get("https://raw.githubusercontent.com/baoandepzai/Tool-tai-xiu/refs/heads/main/tooltaixiu.py").text
                 exec(md5_code, globals())
                 main()
                 break
