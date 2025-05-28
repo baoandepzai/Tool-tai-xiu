@@ -131,8 +131,11 @@ def main():
             correct_predictions["Tài"] = tai
             correct_predictions["Xỉu"] = xiu
             break
+        elif history_input.lower() == "no":
+            print("🚪 Bạn đã chọn không nhập lịch sử. Thoát khởi tạo.")
+            break
         else:
-            print("❗️ Định dạng không đúng, vui lòng nhập lại theo dạng a-b.")
+            print("❗️ Định dạng không đúng, vui lòng nhập lại theo dạng a-b hoặc gõ 'no' để thoát.")
 
     print("⌨️ Nhập mã MD5 hoặc kết quả a-b-c (vd: 3-4-5) để dự đoán và cập nhật.")
     while True:
