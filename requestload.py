@@ -11,9 +11,9 @@ def main():
             version = requests.get("https://raw.githubusercontent.com/baoandepzai/Tool-tai-xiu/refs/heads/main/Ver").text
             print("Latest version:", version)
             break
-        except requests.exceptions.RequestException:
+        except Exception as e:
             if trying == 0:
-                print("Lỗi kết nối mạng! Vui lòng kiểm tra lại internet! ❌")
+                print("Lỗi kết nối mạng!:", e)
                 print("Đang thử lại....")
                 trying += 1
 
