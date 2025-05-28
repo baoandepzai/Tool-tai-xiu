@@ -48,7 +48,6 @@ def main():
                             print("Lỗi khi chạy tool M:", e)
                             print("Đang thử lại....")
                             trying1 += 1
-                break
 
             elif choice == "T":
                 print("Đang tải tool AI tự đoán...")
@@ -62,7 +61,6 @@ def main():
                             print("Lỗi khi chạy tool T:", e)
                             print("Đang thử lại....")
                             trying2 += 1
-                break
 
             else:
                 print("Lựa chọn không hợp lệ! Vui lòng chỉ nhập 'M', 'T' hoặc 'exit' ! >:(")
