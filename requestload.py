@@ -3,7 +3,7 @@ import sys
 
 def main():
     try:
-        version = requests.get("https://raw.githubusercontent.com/baoandepzai/Tool-tai-xiu/refs/heads/main/Ver", timeout=5).text
+        version = requests.get("https://raw.githubusercontent.com/baoandepzai/Tool-tai-xiu/refs/heads/main/Ver").text
         print("Latest version:", version)
     except requests.exceptions.RequestException:
         print("Không có kết nối mạng! Vui lòng kiểm tra lại internet! ❌")
