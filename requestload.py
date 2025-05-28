@@ -13,7 +13,7 @@ def main():
             break
         except requests.exceptions.RequestException:
             if trying == 0:
-                print("Không có kết nối mạng! Vui lòng kiểm tra lại internet! ❌")
+                print("Lỗi kết nối mạng! Vui lòng kiểm tra lại internet! ❌")
                 print("Đang thử lại....")
                 trying += 1
 
