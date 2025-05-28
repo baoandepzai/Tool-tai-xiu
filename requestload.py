@@ -1,11 +1,21 @@
 import requests
 
+trying = 0
+trying1 = 0
+trying2 = 0
+
 def main():
-    try:
-        version = requests.get("https://raw.githubusercontent.com/baoandepzai/Tool-tai-xiu/refs/heads/main/Ver").text
-        print("Latest version:", version)
-    except requests.exceptions.RequestException:
-        print("Không có kết nối mạng! Vui lòng kiểm tra lại internet! ❌")
+    global trying, trying1, trying2
+    while True:
+        try:
+            version = requests.get("https://raw.githubusercontent.com/baoandepzai/Tool-tai-xiu/refs/heads/main/Ver").text
+            print("Latest version:", version)
+            break
+        except requests.exceptions.RequestException:
+            if trying == 0:
+                print("Không có kết nối mạng! Vui lòng kiểm tra lại internet! ❌")
+                print("Đang thử lại....")
+                trying += 1
 
     print("Xin chào bạn đến với tool dự đoán! 🎲")
     print("Bạn muốn dùng tool nào?")
@@ -28,19 +38,31 @@ def main():
 
             elif choice == "M":
                 print("Đang tải tool theo mã MD5...")
-                try:
-                    response = requests.get("https://raw.githubusercontent.com/baoandepzai/Tool-tai-xiu/refs/heads/main/tooltaixiumd5.py", timeout=5)
-                    exec_code(response.text, 'tool_md5')
-                except Exception as e:
-                    print("Lỗi khi chạy tool M:", e)
+                while True:
+                    try:
+                        response = requests.get("https://raw.githubusercontent.com/baoandepzai/Tool-tai-xiu/refs/heads/main/tooltaixiumd5.py", timeout=5)
+                        exec_code(response.text, 'tool_md5')
+                        break
+                    except Exception as e:
+                        if trying1 == 0:
+                            print("Lỗi khi chạy tool M:", e)
+                            print("Đang thử lại....")
+                            trying1 += 1
+                break
 
             elif choice == "T":
                 print("Đang tải tool AI tự đoán...")
-                try:
-                    response = requests.get("https://raw.githubusercontent.com/baoandepzai/Tool-tai-xiu/refs/heads/main/tooltaixiu.py", timeout=5)
-                    exec_code(response.text, 'tool_ai')
-                except Exception as e:
-                    print("Lỗi khi chạy tool T:", e)
+                while True:
+                    try:
+                        response = requests.get("https://raw.githubusercontent.com/baoandepzai/Tool-tai-xiu/refs/heads/main/tooltaixiu.py", timeout=5)
+                        exec_code(response.text, 'tool_ai')
+                        break
+                    except Exception as e:
+                        if trying2 == 0:
+                            print("Lỗi khi chạy tool T:", e)
+                            print("Đang thử lại....")
+                            trying2 += 1
+                break
 
             else:
                 print("Lựa chọn không hợp lệ! Vui lòng chỉ nhập 'M', 'T' hoặc 'exit' ! >:(")
