@@ -87,7 +87,7 @@ def main():
         print("🔎 Nhập lịch sử tổng số phiên Tài - Xỉu để khởi tạo phần trăm.")
 
         while True:
-            history_input = input("⌨️ Nhập lịch sử dạng a-b (Tài-Xỉu), ví dụ 12-8: ").strip()
+            history_input = input("⌨️ Nhập lịch sử dạng a-b (Tài-Xỉu), ví dụ 12-8, no để bỏ qua ").strip()
             if not history_input:
                 continue
             tai, xiu = parse_initial_history(history_input)
