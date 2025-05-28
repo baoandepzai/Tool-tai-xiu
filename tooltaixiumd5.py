@@ -113,6 +113,9 @@ def parse_initial_history(s: str):
     return None, None
 
 def main():
+    
+    trying = 0
+    
     print("version 0.42")
     print("⚡️ Tool Dự Đoán Tài Xỉu MD5 AI ⚡")
     print("Code made by BaoAn")
@@ -145,17 +148,21 @@ def main():
             break
         if md5_hash.upper() == "T":
             print("⏳ Đang chuyển sang chế độ thường...")
-            try:
-                md5_code = requests.get("https://raw.githubusercontent.com/baoandepzai/Tool-tai-xiu/refs/heads/main/tooltaixiu.py").text
-                exec(md5_code, globals())
-                main()
-                break
-            except requests.exceptions.RequestException:
-                print("❌ Lỗi kết nối mạng. Không thể tải chế độ thường.")
-                continue
-            except Exception as e:
-                print("❌ Lỗi khác khi tải chế độ MD5:", e)
-                continue
+            while True:
+                try:
+                    md5_code = requests.get("https://raw.githubusercontent.com/baoandepzai/Tool-tai-xiu/refs/heads/main/tooltaixiu.py", timeout = 5).text
+                    exec(md5_code, globals())
+                    main()
+                    break
+                except requests.exceptions.RequestException:
+                    if trying == 0:
+                        print("❌ Lỗi kết nối mạng. Không thể tải chế độ thường.")
+                        trying += 1
+                except Exception as e:
+                    if trying ==0:
+                        print("❌ Lỗi khác khi tải chế độ MD5:", e)
+                        trying += 1
+        break
         if len(md5_hash) != 32 or not re.fullmatch(r'[0-9a-fA-F]{32}', md5_hash):
             print("❗️ Mã MD5 không hợp lệ.")
             continue
