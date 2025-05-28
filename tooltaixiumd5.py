@@ -162,7 +162,6 @@ def main():
                     if trying ==0:
                         print("❌ Lỗi khác khi tải chế độ MD5:", e)
                         trying += 1
-        break
         if len(md5_hash) != 32 or not re.fullmatch(r'[0-9a-fA-F]{32}', md5_hash):
             print("❗️ Mã MD5 không hợp lệ.")
             continue
