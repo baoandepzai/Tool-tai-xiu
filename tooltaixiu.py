@@ -132,7 +132,6 @@ def main():
                         if trying == 0:
                             print("❌ Lỗi khác khi tải chế độ MD5:", e)
                             trying += 1
-                break
 
             pred = predict_smart()
             print(f"🎯 Dự đoán: {pred}")
