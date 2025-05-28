@@ -1,5 +1,4 @@
 import requests
-import sys
 
 def main():
     try:
@@ -7,13 +6,12 @@ def main():
         print("Latest version:", version)
     except requests.exceptions.RequestException:
         print("Không có kết nối mạng! Vui lòng kiểm tra lại internet! ❌")
-        sys.exit()
 
     print("Xin chào bạn đến với tool dự đoán! 🎲")
     print("Bạn muốn dùng tool nào?")
     print("➤ Nhập 'M' để dùng tool DỰ ĐOÁN Tai Xiu MD5")
     print("➤ Nhập 'T' để dùng tool DỰ ĐOÁN Tai Xiu (AI tự đoán)")
-    print("⚠️Khi nhập nếu để 1 dòng trống sẽ gây lỗi")
+    print("⚠️Khi nhập để 1 dòng trống sẽ quay lại chọn tool")
     print("➤ Nhập 'exit' để thoát chương trình")
 
     while True:
