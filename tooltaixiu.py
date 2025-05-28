@@ -80,6 +80,9 @@ def parse_initial_history(s: str):
     return None, None
 
 def main():
+    
+    trying = 0
+    
     try:
         print("⚡️ Tool Dự Đoán Tài Xỉu AI ⚡")
         print("🎮 Nhập 'M' để chuyển về chế độ Tài Xỉu MD5, exit out")
@@ -115,18 +118,20 @@ def main():
                 break
             if cmd.upper() == "M":
                 print("⏳ Đang chuyển sang chế độ MD5...")
-                while True
+                while True:
                     try:
                         md5_code = requests.get("https://raw.githubusercontent.com/baoandepzai/Tool-tai-xiu/refs/heads/main/tooltaixiumd5.py", timeout=5).text
                         exec(md5_code, globals())
                         main()
                         break
                     except Exception as e:
-                        print("❌ Lỗi kết nối mạng. Không thể tải chế độ MD5:", e)
-                        continue
+                        if trying == 0:
+                            print("❌ Lỗi kết nối mạng. Không thể tải chế độ MD5:", e)
+                            trying += 1
                     except Exception as e:
-                        print("❌ Lỗi khác khi tải chế độ MD5:", e)
-                        continue
+                        if trying == 0:
+                            print("❌ Lỗi khác khi tải chế độ MD5:", e)
+                            trying += 1
                 break
 
             pred = predict_smart()
