@@ -115,17 +115,19 @@ def main():
                 break
             if cmd.upper() == "M":
                 print("⏳ Đang chuyển sang chế độ MD5...")
-                try:
-                    md5_code = requests.get("https://raw.githubusercontent.com/baoandepzai/Tool-tai-xiu/refs/heads/main/tooltaixiumd5.py", timeout=5).text
-                    exec(md5_code, globals())
-                    main()
-                    break
-                except requests.exceptions.RequestException:
-                    print("❌ Lỗi kết nối mạng. Không thể tải chế độ MD5.")
-                    continue
-                except Exception as e:
-                    print("❌ Lỗi khác khi tải chế độ MD5:", e)
-                    continue
+                while True
+                    try:
+                        md5_code = requests.get("https://raw.githubusercontent.com/baoandepzai/Tool-tai-xiu/refs/heads/main/tooltaixiumd5.py", timeout=5).text
+                        exec(md5_code, globals())
+                        main()
+                        break
+                    except Exception as e:
+                        print("❌ Lỗi kết nối mạng. Không thể tải chế độ MD5:", e)
+                        continue
+                    except Exception as e:
+                        print("❌ Lỗi khác khi tải chế độ MD5:", e)
+                        continue
+                break
 
             pred = predict_smart()
             print(f"🎯 Dự đoán: {pred}")
