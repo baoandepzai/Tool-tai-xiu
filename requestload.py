@@ -10,12 +10,13 @@ def main():
         try:
             version = requests.get("https://raw.githubusercontent.com/baoandepzai/Tool-tai-xiu/refs/heads/main/Ver").text
             print("Latest version:", version)
+            trying = 2
             break
         except Exception as e:
             if trying == 0:
                 print("Lỗi kết nối mạng!:", e)
                 print("Đang thử lại....")
-                trying += 1
+                trying = 1
 
     print("Xin chào bạn đến với tool dự đoán! 🎲")
     print("Bạn muốn dùng tool nào?")
@@ -43,9 +44,9 @@ def main():
                         response = requests.get("https://raw.githubusercontent.com/baoandepzai/Tool-tai-xiu/refs/heads/main/tooltaixiumd5.py", timeout=5)
                         exec_code(response.text, 'tool_md5')
                         break
-                    except Exception as e:
+                    except requests.exceptions.RequestException:
                         if trying1 == 0:
-                            print("Lỗi khi chạy tool M:", e)
+                            print("Lỗi khi chạy tool M")
                             print("Đang thử lại....")
                             trying1 += 1
 
@@ -56,9 +57,9 @@ def main():
                         response = requests.get("https://raw.githubusercontent.com/baoandepzai/Tool-tai-xiu/refs/heads/main/tooltaixiu.py", timeout=5)
                         exec_code(response.text, 'tool_ai')
                         break
-                    except Exception as e:
+                    except requests.exceptions.RequestException:
                         if trying2 == 0:
-                            print("Lỗi khi chạy tool T:", e)
+                            print("Lỗi khi chạy tool T")
                             print("Đang thử lại....")
                             trying2 += 1
 
