@@ -116,7 +116,6 @@ def main():
     
     trying = 0
     
-    print("version 0.42")
     print("⚡️ Tool Dự Đoán Tài Xỉu MD5 AI ⚡")
     print("Code made by BaoAn")
     print("🔥Thua tự chịu")
