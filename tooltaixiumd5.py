@@ -200,7 +200,7 @@ def analyze_with_bayesian_inference(
 
     bayesian_result = "Tài" if final_prob_tai >= final_prob_xiu else "Xỉu"
     
-    print(f"✨Xác xuất (Bayes): {bayesian_result} (Tài: {final_prob_tai:.2%}, Xỉu: {final_prob_xiu:.2%})")
+    print(f"✨Xác xuất: {bayesian_result} (Tài: {final_prob_tai:.2%}, Xỉu: {final_prob_xiu:.2%})")
 
 
 def predict_smart(md5_hash):
