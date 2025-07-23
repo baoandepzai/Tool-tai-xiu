@@ -55,7 +55,7 @@ def bias_by_winrate():
     tai_ratio = tai_count / total_recent
     xiu_ratio = xiu_count / total_recent
 
-    threshold = 0.60 
+    threshold = 0.55 
     
     if tai_ratio >= threshold:
         print(f"💡 Trong {total_recent} ván gần đây (Tài: {tai_count}, Xỉu: {xiu_count}): Tài chiếm {tai_ratio:.2%}. Đang bias Tài.")
@@ -120,7 +120,7 @@ def calculate_likelihoods(
     tai_ratio_actual = correct_predictions["Tài"] / total_tx_actual if total_tx_actual > 0 else 0.5
     
     md5_bonus_match = 0.08 
-    md5_penalty_mismatch = 0.06
+    md5_penalty_mismatch = 0.08
 
     if base_prediction == "Tài":
         likelihood_tai_md5 = tai_ratio_actual + md5_bonus_match
@@ -151,7 +151,7 @@ def calculate_likelihoods(
         likelihoods["Winrate_Bias"]["Xỉu"] = max(0.01, min(0.99, likelihoods["Winrate_Bias"]["Xỉu"]))
 
 
-    sequence_bias_impact = 0.02 
+    sequence_bias_impact = 0.03 
 
     if sequence_prediction is not None:
         if sequence_prediction == "Tài":
