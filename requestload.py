@@ -20,8 +20,8 @@ def main():
 
     print("Xin chào bạn đến với tool dự đoán! 🎲")
     print("Bạn muốn dùng tool nào?")
-    print("➤ Nhập 'M' để dùng tool DỰ ĐOÁN Tai Xiu MD5")
-    print("➤ Nhập 'T' để dùng tool DỰ ĐOÁN Tai Xiu (AI tự đoán)")
+    print("➤ Nhập '1' để dùng tool DỰ ĐOÁN Tai Xiu MD5")
+    print("➤ Nhập '2' để dùng tool DỰ ĐOÁN Tai Xiu (AI tự đoán)")
     print("⚠️Khi nhập để 1 dòng trống sẽ quay lại chọn tool")
     print("➤ Nhập 'exit' để thoát chương trình")
 
@@ -37,7 +37,7 @@ def main():
                 print("Tạm biệt! Hẹn gặp lại lần sau nha! 👋")
                 break
 
-            elif choice == "M":
+            elif choice == "1":
                 print("Đang tải tool theo mã MD5...")
                 while True:
                     try:
@@ -50,7 +50,7 @@ def main():
                             print("Đang thử lại....")
                             trying1 += 1
 
-            elif choice == "T":
+            elif choice == "2":
                 print("Đang tải tool AI tự đoán...")
                 while True:
                     try:
