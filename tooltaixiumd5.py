@@ -10,7 +10,6 @@ correct_predictions = {"Tài": 0, "Xỉu": 0}
 recent_predictions = deque(maxlen=50) 
 recent_results = deque(maxlen=50)
 
-# + Thống kê theo cụm prefix MD5 (4 ký tự đầu)
 prefix_stats = {}
 
 def md5_to_number(md5_hash):
@@ -24,18 +23,24 @@ def determine_result(md5_hash):
     return sum_to_tx(md5_to_number(md5_hash))
 
 def bias_by_streak():
-    if len(recent_results) < 4:
-        return None
+    if len(recent_results) < 2: 
+        return None, 0, None
+
     last = recent_results[-1]
     streak = 1
-    for res in reversed(list(recent_results)[-5:-1]):
-        if res == last:
+    previous_result = None
+
+    for i in range(2, min(len(recent_results) + 1, 6)):
+        if recent_results[-i] == last:
             streak += 1
         else:
+            previous_result = recent_results[-i]
             break
+            
     if streak >= 3:
         print(f"⚠️ Đã có {streak} lần {last} liên tiếp. Nên cân nhắc đợi phiên sau.")
-    return None
+        
+    return last, streak, previous_result 
 
 def bias_by_prefix(md5_hash):
     prefix = md5_hash[:4]
@@ -44,28 +49,59 @@ def bias_by_prefix(md5_hash):
         if data["Tài"] > data["Xỉu"]:
             print(f"💡 Prefix {prefix} có xu hướng Tài ({data['Tài']} vs {data['Xỉu']})")
         elif data["Xỉu"] > data["Tài"]:
-            print(f"💡 Prefix {prefix} có xu hướng Xỉu ({data['Xỉu']} vs {data['Tài']})")
+            print(f"💡 Prefix {prefix} có xu hướng Xỉu ({data['Xỉu']} vs {data['Xỉu']})")
         else:
             print(f"💡 Prefix {prefix} chưa có xu hướng rõ ràng ({data['Tài']} vs {data['Xỉu']})")
     else:
         print(f"💡 Prefix {prefix} chưa từng xuất hiện trước đó.")
     return None
 
-def calculate_likelihoods(base_prediction): 
+def calculate_likelihoods(base_prediction, streak_info=None): 
     likelihoods = {}
 
     total_tx_actual = sum(correct_predictions.values())
     tai_ratio_actual = correct_predictions["Tài"] / total_tx_actual if total_tx_actual > 0 else 0.5
     
-    md5_bonus_match = 0.08 
-    md5_penalty_mismatch = 0.08
+    base_impact = 0.08 
+    
+    dynamic_impact = base_impact
+
+    if streak_info and streak_info[1] >= 1:
+        current_result_of_streak = streak_info[0]
+        current_streak_length = streak_info[1]
+        previous_result_before_streak = streak_info[2]
+
+        if current_streak_length == 1:
+            dynamic_impact_base = 0.08
+        elif current_streak_length == 2:
+            dynamic_impact_base = 0.06
+        elif current_streak_length == 3:
+            dynamic_impact_base = 0.04
+        elif current_streak_length == 4:
+            dynamic_impact_base = 0.02
+        else:
+            dynamic_impact_base = 0.01
+
+        if current_result_of_streak == base_prediction:
+            dynamic_impact = dynamic_impact_base
+        else:
+            dynamic_impact = -dynamic_impact_base
+
+        if current_streak_length >= 1 and previous_result_before_streak is not None:
+            if previous_result_before_streak != base_prediction:
+                if base_prediction == "Xỉu" and previous_result_before_streak == "Tài" and current_streak_length >= 4:
+                    dynamic_impact = -(base_impact + 0.05) 
+                    print(f"✨ Phát hiện chuyển đổi mạnh sang Xỉu sau chuỗi dài!")
+                elif base_prediction == "Tài" and previous_result_before_streak == "Xỉu" and current_streak_length >= 4:
+                    dynamic_impact = (base_impact + 0.05) 
+                    print(f"✨ Phát hiện chuyển đổi mạnh sang Tài sau chuỗi dài!")
 
     if base_prediction == "Tài":
-        likelihood_tai_md5 = tai_ratio_actual + md5_bonus_match
-        likelihood_xiu_md5 = (1 - tai_ratio_actual) - md5_penalty_mismatch
-    else: 
-        likelihood_tai_md5 = tai_ratio_actual - md5_penalty_mismatch
-        likelihood_xiu_md5 = (1 - tai_ratio_actual) + md5_bonus_match
+        likelihood_tai_md5 = tai_ratio_actual + dynamic_impact
+        likelihood_xiu_md5 = (1 - tai_ratio_actual) - dynamic_impact
+    else:
+        likelihood_tai_md5 = tai_ratio_actual - dynamic_impact
+        likelihood_xiu_md5 = (1 - tai_ratio_actual) + dynamic_impact
     
     likelihoods["MD5_Prediction"] = {
         "Tài": max(0.01, min(0.99, likelihood_tai_md5)),
@@ -74,12 +110,12 @@ def calculate_likelihoods(base_prediction):
 
     return likelihoods
 
-def analyze_with_bayesian_inference(base_prediction):
+def analyze_with_bayesian_inference(base_prediction, streak_info=None): 
     total_tx = sum(correct_predictions.values())
     prior_tai = correct_predictions["Tài"] / total_tx if total_tx > 0 else 0.5
     prior_xiu = correct_predictions["Xỉu"] / total_tx if total_tx > 0 else 0.5
 
-    evidence_likelihoods = calculate_likelihoods(base_prediction)
+    evidence_likelihoods = calculate_likelihoods(base_prediction, streak_info)
 
     posterior_tai = prior_tai
     posterior_xiu = prior_xiu
@@ -105,16 +141,17 @@ def predict_smart(md5_hash):
     base_prediction = determine_result(md5_hash)
     print(f"🎯 Dự đoán: {base_prediction}")
 
-    bias_by_streak()
+    last_result_of_streak, streak_length, previous_result_before_streak = bias_by_streak() 
+    streak_info = (last_result_of_streak, streak_length, previous_result_before_streak) if last_result_of_streak else None
 
-    analyze_with_bayesian_inference(base_prediction)
+    analyze_with_bayesian_inference(base_prediction, streak_info)
     
     bias_by_prefix(md5_hash)
     
     return base_prediction
 
 def update_accuracy(pred, actual, md5_hash=None):
-    global total_predictions, correct_count, correct_predictions, prefix_stats # Đã loại bỏ sequence_patterns
+    global total_predictions, correct_count, correct_predictions, prefix_stats 
     
     total_predictions += 1 
     correct = (pred == actual)
