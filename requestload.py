@@ -27,7 +27,7 @@ def main():
 
     while True:
         try:
-            choice = input(">>> Nhập lựa chọn của bạn (M/T/exit): ").strip().upper()
+            choice = input(">>> Nhập lựa chọn của bạn (1/2/exit): ").strip().upper()
 
             if not choice:
                 print("Bạn chưa nhập gì cả! Hãy thử lại! :)")
