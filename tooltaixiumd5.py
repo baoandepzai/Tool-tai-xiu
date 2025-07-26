@@ -91,10 +91,8 @@ def calculate_likelihoods(base_prediction, streak_info=None):
             if previous_result_before_streak != base_prediction:
                 if base_prediction == "Xỉu" and previous_result_before_streak == "Tài" and current_streak_length >= 4:
                     dynamic_impact = -(base_impact + 0.05) 
-                    print(f"✨ Phát hiện chuyển đổi mạnh sang Xỉu sau chuỗi dài!")
                 elif base_prediction == "Tài" and previous_result_before_streak == "Xỉu" and current_streak_length >= 4:
                     dynamic_impact = (base_impact + 0.05) 
-                    print(f"✨ Phát hiện chuyển đổi mạnh sang Tài sau chuỗi dài!")
 
     if base_prediction == "Tài":
         likelihood_tai_md5 = tai_ratio_actual + dynamic_impact
