@@ -211,7 +211,10 @@ def main():
     print("❕️Lưu ý kết quả nhận được đều là sự tính toán")
     print("🔎 Nhập lịch sử tổng số phiên Tài - Xỉu để khởi tạo phần trăm.")
     while True:
-        history_input = input("⌨️ Nhập lịch sử dạng a-b (Tài-Xỉu), ví dụ 12-8, no để bỏ qua ").strip()
+        try:
+            history_input = input("⌨️ Nhập lịch sử dạng a-b (Tài-Xỉu), ví dụ 12-8, no để bỏ qua ").strip()
+        except:
+            continue
         tai, xiu = parse_initial_history(history_input)
         if tai is not None and xiu is not None:
             total_history = tai + xiu 
@@ -233,7 +236,10 @@ def main():
 
     print("⌨️ Nhập mã MD5 hoặc kết quả a-b-c (vd: 3-4-5) để dự đoán và cập nhật.")
     while True:
-        md5_hash = input("🔠 Nhập mã MD5: ").strip()
+        try:
+            md5_hash = input("🔠 Nhập mã MD5: ").strip()
+        except:
+            continue
         if md5_hash.lower() == "exit":
             print("👋 Tạm biệt!")
             break
@@ -260,8 +266,10 @@ def main():
             continue
             
         pred = predict_smart(md5_hash)
-        
-        actual_input = input("🌟 Kết quả thực tế (Tài/Xỉu hoặc a-b-c): ").strip().capitalize()
+        try:
+            actual_input = input("🌟 Kết quả thực tế (Tài/Xỉu hoặc a-b-c): ").strip().capitalize()
+        except:
+            continue
         if "-" in actual_input:
             parsed = parse_actual_from_code(actual_input)
             if parsed:
