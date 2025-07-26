@@ -202,7 +202,10 @@ def main():
                 cmd = input("🔠 Nhập để dự đoán ").strip()
             except:
                 continue
-            if cmd.lower() == "exit":
+            if re.match(".*", cmd):
+                pred = predict_smart()
+                print(f"🎯 Dự đoán: {pred}")
+            elif cmd.lower() == "exit":
                 print("👋 Tạm biệt!")
                 break
             elif cmd.upper() == "M":
@@ -221,12 +224,9 @@ def main():
                         if trying == 0:
                             print("❌ Lỗi khác khi tải chế độ MD5:", e)
                             trying += 1
-
-            pred = predict_smart()
-            print(f"🎯 Dự đoán: {pred}")
-
-            actual_input = input("🌟 Kết quả thực tế (Tài/Xỉu hoặc a-b-c): ").strip().capitalize()
-            if not actual_input:
+            try:
+                actual_input = input("🌟 Kết quả thực tế (Tài/Xỉu hoặc a-b-c): ").strip().capitalize()
+            except:
                 continue
             if "-" in actual_input:
                 parsed = parse_actual_from_code(actual_input)
