@@ -126,7 +126,9 @@ def predict_smart():
     last_result_of_streak, streak_length, previous_result_before_streak = bias_by_streak()
     streak_info = (last_result_of_streak, streak_length, previous_result_before_streak) if last_result_of_streak else None
 
-    final_prediction = analyze_with_bayesian_inference(base_prediction, streak_info)
+    analyze_with_bayesian_inference(base_prediction, streak_info)
+    
+    return base_prediction
 
 def update_accuracy(pred: str, actual: str):
     global total_predictions, correct_count
@@ -201,7 +203,7 @@ def main():
             except:
                 continue
             if re.match(".*", cmd):
-                predict_smart()
+                pred = predict_smart()
             elif cmd.lower() == "exit":
                 print("👋 Tạm biệt!")
                 break
