@@ -128,8 +128,6 @@ def predict_smart():
 
     final_prediction = analyze_with_bayesian_inference(base_prediction, streak_info)
 
-    return final_prediction
-
 def update_accuracy(pred: str, actual: str):
     global total_predictions, correct_count
     total_predictions += 1
@@ -203,8 +201,7 @@ def main():
             except:
                 continue
             if re.match(".*", cmd):
-                pred = predict_smart()
-                print(f"🎯 Dự đoán: {pred}")
+                predict_smart()
             elif cmd.lower() == "exit":
                 print("👋 Tạm biệt!")
                 break
